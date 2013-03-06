@@ -1,11 +1,21 @@
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
+
 /**
- * <p>Lists the IP interfaces defined on the system using the Java NetworkInterface.</p>
- * <p>alexis.grandemange@pagebox.net</p>
- * <p>Copyright (c) 2003 Alexis Grandemange</p>
- * <pre>This program is free software; you can redistribute it and/or
+ * <p>
+ * Lists the IP interfaces defined on the system using the Java
+ * NetworkInterface.
+ * </p>
+ * <p>
+ * alexis.grandemange@pagebox.net
+ * </p>
+ * <p>
+ * Copyright (c) 2003 Alexis Grandemange
+ * </p>
+ * 
+ * <pre>
+ * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; version 2.1 of the
  * License.
@@ -14,24 +24,27 @@ import java.util.Enumeration;
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  * A copy of the GNU Lesser General Public License lesser.txt should be
- * included in the distribution.</pre>
- * @author  Alexis Grandemange
+ * included in the distribution.
+ * </pre>
+ * 
+ * @author Alexis Grandemange
  * @version 0, 0, 1
  */
 public class Ipconfig {
 	Ipconfig() throws Exception {
 		Enumeration<?> en = NetworkInterface.getNetworkInterfaces();
-		while(en.hasMoreElements()) {
-			NetworkInterface ni = (NetworkInterface)en.nextElement();
+		while (en.hasMoreElements()) {
+			NetworkInterface ni = (NetworkInterface) en.nextElement();
 			Enumeration<?> en2 = ni.getInetAddresses();
-			while(en2.hasMoreElements()) {
-				InetAddress ia = (InetAddress)en2.nextElement();
-				System.out.println("Interface name:" + ni.getName() +
-					" display name:" + ni.getDisplayName() + " " +
-					ia.getHostAddress());
+			while (en2.hasMoreElements()) {
+				InetAddress ia = (InetAddress) en2.nextElement();
+				System.out.println("Interface name:" + ni.getName()
+						+ " display name:" + ni.getDisplayName() + " "
+						+ ia.getHostAddress());
 			}
 		}
 	}
+
 	public static void main(String[] args) throws Exception {
 		new Ipconfig();
 	}
