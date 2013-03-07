@@ -8,7 +8,7 @@ public class AddressScanner implements Runnable, AdressScannerObservable {
 	private String sInetAddress = null;
     private static final int TIMEOUT = 15000;
     private int position;
-    private ArrayList <AdressScannerObserver> al = new ArrayList();
+    private ArrayList <AdressScannerObserver> al = new ArrayList<AdressScannerObserver>();
     
     
     
