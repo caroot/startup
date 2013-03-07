@@ -14,9 +14,10 @@ public class AddressScanner implements Runnable, AdressScannerObservable {
     
     public AddressScanner(String inetAddress, int position) {
             this.sInetAddress = inetAddress;
-            new Thread(this).start();
             this.position=position;
-        }
+            new Thread(this).start();
+            
+    }
  
     public void run() {
             try {

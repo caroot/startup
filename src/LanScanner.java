@@ -1,7 +1,7 @@
 import java.net.InetAddress;
 import java.net.UnknownHostException;
  
-public class LanScanner implements AdressScannerObserver {
+public class LanScanner implements AdressScannerObserver{
    
 	private static Object[] addresses = new Object[255];
 
@@ -10,8 +10,8 @@ public class LanScanner implements AdressScannerObserver {
 	        String[] sAddress = ia.getHostAddress().split("[.]");
 	        String lanAddress = sAddress[0] + "." + sAddress[1] + "." + sAddress[2] + ".";
 	        for (short s = 1; s < 255; s++) {
-	            AddressScanner a =new AddressScanner(lanAddress + s, s);
-	            a.addAdressScannerObserver(this);
+	        	AddressScanner a=  new AddressScanner(lanAddress + s, s);
+	        	a.addAdressScannerObserver(this);
 	        }
 	    }
 	
@@ -19,12 +19,13 @@ public class LanScanner implements AdressScannerObserver {
 		
 //		System.out.println(position);
 		addresses[position]=o;
+		System.out.println("pos: " + position + "\t" + "IP: " + addresses[position]);
 		
 	}
 
 	private void getArrayContent() {
 		for (int i=1; i<255; i++){
-			System.out.println("pos: " + i + "\t" + "IP: " + addresses[i]);
+			//System.out.println("pos: " + i + "\t" + "IP: " + addresses[i]);
 		}
 	}	
 	
@@ -32,9 +33,10 @@ public class LanScanner implements AdressScannerObserver {
 		  
 	    try {
 				LanScanner ls = new LanScanner(InetAddress.getLocalHost());
-
-				ls.getArrayContent();
-				
+				//for (int i=0; i<100000; i++) {
+				//	System.out.print(":");
+				//}
+				//ls.getArrayContent();
 			} catch (UnknownHostException e) {
 			
 				e.printStackTrace();
