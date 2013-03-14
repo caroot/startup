@@ -7,31 +7,38 @@ import java.util.ArrayList;
 
 
 public class AddressScanner implements Runnable, AdressScannerObservable {
-	private String sInetAddress = null;
+	
     private static final int TIMEOUT = 15000;
+    private final static  String filename= "IPs.txt";
+    
+    private String sInetAddress = null;
+    
     private int position;
     private ArrayList <AdressScannerObserver> al = new ArrayList<AdressScannerObserver>();
-    private File test= new File("d:\\vs\\test.txt");
+    private DirectoryCheck dir = new DirectoryCheck();
+    private File file;
     private FileWriter fw;
     
     
     public AddressScanner(String inetAddress, int position) {
+    	file = new File(dir.getHomeDir() + "\\" + filename);
             this.sInetAddress = inetAddress;
             this.position=position;
             new Thread(this).start();
             
     }
  
-    public void run() {
+    @Override
+	public void run() {
             try {
                 InetAddress ia = InetAddress.getByName(this.sInetAddress);
-                fw = new FileWriter(test,true);
+                fw = new FileWriter(file,true);
 //                ++position;
                 if ( 	ia.isReachable(TIMEOUT) 
                 		|| !ia.getCanonicalHostName().equalsIgnoreCase(this.sInetAddress) 
                 		|| !ia.getHostName().equalsIgnoreCase(this.sInetAddress)) 
                 {
-                	System.out.println("Reached " + this.sInetAddress + "(" + ia.getCanonicalHostName() + ")");
+//                	System.out.println("Reached " + this.sInetAddress + "(" + ia.getCanonicalHostName() + ")");
 //                	LanScanner.inserIntoArray(this.sInetAddress, position);
                 		
                 	fw.write(sInetAddress);

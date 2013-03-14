@@ -15,6 +15,7 @@ public class LanScanner implements AdressScannerObserver{
 	        }
 	    }
 	
+	@Override
 	public void inserIntoArray(String o, int position){
 		
 //		System.out.println(position);
