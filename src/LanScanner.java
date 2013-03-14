@@ -19,13 +19,13 @@ public class LanScanner implements AdressScannerObserver{
 		
 //		System.out.println(position);
 		addresses[position]=o;
-		System.out.println("pos: " + position + "\t" + "IP: " + addresses[position]);
+//		System.out.println("pos: " + position + "\t" + "IP: " + addresses[position]);
 		
 	}
 
 	private void getArrayContent() {
 		for (int i=1; i<255; i++){
-			//System.out.println("pos: " + i + "\t" + "IP: " + addresses[i]);
+//			System.out.println("pos: " + i + "\t" + "IP: " + addresses[i]);
 		}
 	}	
 	
@@ -36,7 +36,7 @@ public class LanScanner implements AdressScannerObserver{
 				//for (int i=0; i<100000; i++) {
 				//	System.out.print(":");
 				//}
-				//ls.getArrayContent();
+				ls.getArrayContent();
 			} catch (UnknownHostException e) {
 			
 				e.printStackTrace();
