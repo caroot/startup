@@ -15,7 +15,7 @@ public class AddressScanner implements Runnable, AdressScannerObservable {
     
     private int position;
     private ArrayList <AdressScannerObserver> al = new ArrayList<AdressScannerObserver>();
-    private DirectoryCheck dir = new DirectoryCheck();
+    private HostCheck dir = new HostCheck();
     private File file;
     private FileWriter fw;
     

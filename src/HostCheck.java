@@ -1,7 +1,10 @@
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-public class DirectoryCheck {
 
-	public DirectoryCheck(){
+public class HostCheck {
+
+	public HostCheck(){
 		
 	}
 	
@@ -18,12 +21,20 @@ public class DirectoryCheck {
 		return System.getProperty("os.name");
 	}
 	
+	public String getHostIP() throws UnknownHostException{
+		
+			return (String) (InetAddress.getLocalHost().getHostAddress());
+		
+	}
+	
 
 		public static void main(String[] args) {
-			DirectoryCheck check = new DirectoryCheck();
+			HostCheck check = new HostCheck();
+			
 			String home = check.getHomeDir();
 			String work = check.getWorkDir();
 			String os = check.getOSName();
+			
 			System.out.println(home);
 			System.out.println(work);
 			System.out.println(os);
