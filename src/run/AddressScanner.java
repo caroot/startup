@@ -22,7 +22,8 @@ public class AddressScanner implements Runnable, AdressScannerObservable {
     
     
     public AddressScanner(String inetAddress, int position) {
-    	file = new File(hc.setFilePath()+ filename);
+
+    		file = new File(hc.setFilePath()+ filename);
             this.sInetAddress = inetAddress;
             this.position=position;
             new Thread(this).start();
