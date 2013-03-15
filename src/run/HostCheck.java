@@ -28,6 +28,23 @@ public class HostCheck {
 		
 	}
 	
+	public String setFilePath(){
+		
+		String path = getOSName();
+		
+//		System.out.println(path);
+		if (path.contains("Windows")) {
+			
+			path = getHomeDir() + "\\";
+		}
+		
+		else {
+			path = getHomeDir() + "/";
+		}
+		
+			return path;
+	}
+	
 
 		public static void main(String[] args) {
 			HostCheck check = new HostCheck();
@@ -39,6 +56,8 @@ public class HostCheck {
 			System.out.println(home);
 			System.out.println(work);
 			System.out.println(os);
+			System.out.println(check.setFilePath());
+			
 			
 		}
 	}

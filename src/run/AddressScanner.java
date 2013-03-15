@@ -16,13 +16,13 @@ public class AddressScanner implements Runnable, AdressScannerObservable {
     
     private int position;
     private ArrayList <AdressScannerObserver> al = new ArrayList<AdressScannerObserver>();
-    private HostCheck dir = new HostCheck();
+    private HostCheck hc = new HostCheck();
     private File file;
     private FileWriter fw;
     
     
     public AddressScanner(String inetAddress, int position) {
-    	file = new File(dir.getHomeDir() + "\\" + filename);
+    	file = new File(hc.setFilePath()+ filename);
             this.sInetAddress = inetAddress;
             this.position=position;
             new Thread(this).start();
