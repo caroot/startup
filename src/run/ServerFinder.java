@@ -15,7 +15,6 @@ public class ServerFinder {
 	
 	public ServerFinder(){
 		
-		
 	}
 
 	
@@ -30,12 +29,17 @@ public class ServerFinder {
 	    
 	    while (i < 255 && br.readLine() != null){
 		    if (linecount == 0){
-		    	System.out.println(linecount);
+//		    	System.out.println(linecount);
+//		    	System.out.println(br.readLine());
+		    	
 		    	linecount++;
-		    	System.out.println(linecount);
+//		    	i++;
+//		    	System.out.println(linecount);
+//		    	System.out.println(i);
+		    	
 		    	}
 			    else {
-			    	System.out.println("filetoarray!");
+//			    	System.out.println(i);
 			    	addresses[i] = br.readLine();
 			    	
 			    	i++;
@@ -46,6 +50,7 @@ public class ServerFinder {
 	}
 	
 	public void makeServer(){
+		System.out.println(addresses[0]);
 		if (addresses[0] != null){
 			System.out.println( addresses[1].toString() + " is Server!");
 		}
@@ -60,8 +65,10 @@ public class ServerFinder {
 					LanScanner ls = new LanScanner(InetAddress.getLocalHost());
 					ServerFinder sf = new ServerFinder();
 					sf.fileToArray();
-					sf.makeServer();
+//					Thread.sleep(150);
 					
+//					sf.makeServer();
+					sf.makeServer();
 				} catch (UnknownHostException e) {
 				
 					e.printStackTrace();

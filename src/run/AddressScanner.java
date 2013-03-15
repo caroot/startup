@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class AddressScanner implements Runnable, AdressScannerObservable {
 	
-    private static final int TIMEOUT = 15000;
+    private static final int TIMEOUT = 15;
     private final static  String filename= "IPs.txt";
     
     private String sInetAddress = null;
@@ -26,7 +26,7 @@ public class AddressScanner implements Runnable, AdressScannerObservable {
     		file = new File(hc.setFilePath()+ filename);
             this.sInetAddress = inetAddress;
             this.position=position;
-            new Thread(this).start();
+            run();
             
     }
  
