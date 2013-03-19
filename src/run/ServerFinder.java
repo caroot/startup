@@ -20,7 +20,7 @@ public class ServerFinder {
 	
 	public void fileToArray() throws IOException{
 		int i= 0;
-		int linecount = 0;
+		
 		String path = hc.setFilePath() + "IPs.txt";
 		addresses = new String[MAX_NETSIZE];
 		System.out.println(path);
@@ -28,22 +28,10 @@ public class ServerFinder {
 	    BufferedReader br = new BufferedReader(fr);
 	    
 	    while (i < 255 && br.readLine() != null){
-		    if (linecount == 0){
-//		    	System.out.println(linecount);
-//		    	System.out.println(br.readLine());
-		    	
-		    	linecount++;
-//		    	i++;
-//		    	System.out.println(linecount);
-//		    	System.out.println(i);
-		    	
-		    	}
-			    else {
-//			    	System.out.println(i);
+
 			    	addresses[i] = br.readLine();
 			    	
 			    	i++;
-			    }
 	    }
 	    br.close();
 	    fr.close();
