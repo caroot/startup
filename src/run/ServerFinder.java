@@ -1,6 +1,7 @@
 package run;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -10,7 +11,7 @@ public class ServerFinder {
 	
 	private static final int MAX_NETSIZE = 255;
 	
-	private HostCheck hc = new HostCheck();
+	private static HostCheck hc = new HostCheck();
 	private String [] addresses;
 	
 	public ServerFinder(){
@@ -47,9 +48,16 @@ public class ServerFinder {
 		}
 		
 	}
+	
+	private static void checkFile() {
+		File tmp = new File(hc.setFilePath()+"Ips.txt");
+		if (tmp.exists())
+			tmp.delete();
+	}
 		public static void main(String[] args) {
 			  
 		    try {
+		    		checkFile();
 					LanScanner ls = new LanScanner(InetAddress.getLocalHost());
 					ServerFinder sf = new ServerFinder();
 					sf.fileToArray();
