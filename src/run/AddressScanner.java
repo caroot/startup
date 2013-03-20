@@ -2,14 +2,16 @@ package run;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 
 public class AddressScanner implements Runnable, AdressScannerObservable {
 	
-    private static final int TIMEOUT = 15;
+    private static final int TIMEOUT = 1000;
     private final static  String filename= "IPs.txt";
     
     private String sInetAddress = null;
@@ -27,6 +29,7 @@ public class AddressScanner implements Runnable, AdressScannerObservable {
             this.sInetAddress = inetAddress;
             this.position=position;
             run();
+//            new Thread(this).start();
             
     }
  
@@ -36,9 +39,19 @@ public class AddressScanner implements Runnable, AdressScannerObservable {
                 InetAddress ia = InetAddress.getByName(this.sInetAddress);
                 fw = new FileWriter(file,true);
 //                ++position;
-                if ( 	ia.isReachable(TIMEOUT) 
-                		|| !ia.getCanonicalHostName().equalsIgnoreCase(this.sInetAddress) 
-                		|| !ia.getHostName().equalsIgnoreCase(this.sInetAddress)) 
+                
+                Process p1 = java.lang.Runtime.getRuntime().exec("ping -w 200 -n 2 "+sInetAddress);
+                int returnVal = p1.waitFor();
+                boolean reachable = (returnVal==0);
+                
+                if (reachable)
+                	System.out.println(ia.toString() +" is reachable!");
+                else
+                	System.out.println(ia.toString() +" is not reachable!");
+                
+                if ( 	ia.isReachable(15000)) 
+//                		|| !ia.getCanonicalHostName().equalsIgnoreCase(this.sInetAddress) 
+//                		|| !ia.getHostName().equalsIgnoreCase(this.sInetAddress)) 
                 {
 //                	System.out.println("Reached " + this.sInetAddress + "(" + ia.getCanonicalHostName() + ")");
 //                	LanScanner.inserIntoArray(this.sInetAddress, position);
@@ -60,7 +73,10 @@ public class AddressScanner implements Runnable, AdressScannerObservable {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-        }	
+        } catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
     }
 
 	@Override
