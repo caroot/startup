@@ -22,7 +22,7 @@ public class LanScanner {
 	}
 
 	public void getArrayContent() {
-		for (int i=1; i<255; i++){
+		for (int i=1; i<10; i++){
 			
 			System.out.println("pos: " + i + "\t" + "IP: " + addresses[i]);
 		}
