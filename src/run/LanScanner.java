@@ -29,6 +29,21 @@ public class LanScanner {
 		
 	}	
 	
+	public Object[] getArray(){
+		return addresses;
+	}
+	
+	public static int getNumerOfAddresses(){
+		int count=0;
+		
+		for (int i=0; i<10; i++){
+			if (addresses[i] != null){
+				count++;
+			}
+		}
+		return 	count;
+	}
+	
 	public static void main(String[] args) {
 		  
 	    try {
