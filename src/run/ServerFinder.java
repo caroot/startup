@@ -12,64 +12,23 @@ import java.util.Enumeration;
 
 public class ServerFinder {
 	
-	private static final int MAX_NETSIZE = 255;
-	
-	private static HostCheck hc = new HostCheck();
-	private String [] addresses;
 	
 	public ServerFinder(){
 		
 	}
 
 	
-	public void fileToArray() throws IOException{
-		int i= 0;
-		String line = null;
-		
-		String path = hc.setFilePath() + "IPs.txt";
-		addresses = new String[MAX_NETSIZE];
-		System.out.println(path);
-		FileReader fr = new FileReader(path);
-	    BufferedReader br = new BufferedReader(fr);
-	    
-	    while (i < 255 && (line = br.readLine()) != null){
-			    	addresses[i] = line;
-			    	System.out.println(addresses[i]);
-			    	
-			    	i++;
-	    }
-	    br.close();
-	    fr.close();
-	}
 	
-	public void makeServer(){
-		System.out.println(addresses[0]);
-		if (addresses[0] != null){
-			System.out.println( addresses[1].toString() + " is Server!");
-		}
-		else {
-			
-		}
-		
-	}
 	
-	private static void checkFile() {
-		File tmp = new File(hc.setFilePath()+"Ips.txt");
-		if (tmp.exists())
-			tmp.delete();
-	}
+	
 	
 	public static void main(String[] args) {
 			  
 		    try {
-		    		checkFile();
 					LanScanner ls = new LanScanner(getLocalIP());
 					ServerFinder sf = new ServerFinder();
-					sf.fileToArray();
-//					Thread.sleep(150);
-					
-//					sf.makeServer();
-					sf.makeServer();
+					ls.getArrayContent();
+
 				} catch (UnknownHostException e) {
 				
 					e.printStackTrace();
