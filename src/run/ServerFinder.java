@@ -7,11 +7,19 @@ import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 
+import main.java.org.cluster.control.BasicOnlineTest;
+
 public class ServerFinder {
 	
+	private static final int JBOSS_PORT = 8080;
 	
-	public ServerFinder(){
-		
+	private static String myIP = null;
+	private BasicOnlineTest ba;
+	
+	
+	public ServerFinder() throws IOException{
+		LanScanner ls = new LanScanner(getLocalIP());
+		ba = new BasicOnlineTest();
 	}
 
 	
@@ -19,16 +27,19 @@ public class ServerFinder {
 	public void checkIdentity() throws IOException, InterruptedException{
 		if (LanScanner.getNumerOfAddresses() == 1){
 			System.out.println("I am Server!");
-			
-			
-//			Process myProcess = java.lang.Runtime.getRuntime().exec(cmd);
-			
-			new Thread(new Runnable() {
-				
+						
+			new Thread(new Runnable() {				
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					String cmd = "C:\\Program Files\\jboss\\jboss-as-7.1.1.Final\\bin\\standalone.bat";
+					String cmd;
+					String home = System.getProperty("user.home");
+					if (System.getProperty("os.name").contains("Windows")) {
+						cmd = home + "\\jboss-as-7.1.1.Final\\bin\\standalone.bat -b "+ myIP;
+					} else {
+						cmd = home + "/jboss-as-7.1.1.Final/bin/standalon.sh -b " + myIP;
+					}
+					
 					try {
 						Process myProcess = java.lang.Runtime.getRuntime().exec(cmd);
 						int returnVal = myProcess.waitFor();
@@ -41,10 +52,9 @@ public class ServerFinder {
 					}
 				}
 			}).start();
-//			int returnVal = myProcess.waitFor();
 			
-//			System.out.println(returnVal);
-//			Hier JBOSS Server starten und port für abfrage öffnen
+		} else {
+//			ba.isAvailable(server, port, securityRealm);
 		}
 		
 	}
@@ -59,9 +69,9 @@ public class ServerFinder {
 			while (addresses.hasMoreElements()) {
 				InetAddress curAdd = addresses.nextElement();
 				if (curAdd instanceof Inet4Address) {
-					String addr = curAdd.toString();
-					addr = addr.trim().substring(1);
-					if (addr.startsWith("192.168.16"))
+					myIP = curAdd.toString();
+					myIP = myIP.trim().substring(1);
+					if (myIP.startsWith("192.168.16"))
 						localIP = curAdd;
 				}
 			}
@@ -76,7 +86,6 @@ public class ServerFinder {
 	public static void main(String[] args) {
 			  
 		    try {
-					LanScanner ls = new LanScanner(getLocalIP());
 					ServerFinder sf = new ServerFinder();
 //					ls.getArrayContent();
 					sf.checkIdentity();

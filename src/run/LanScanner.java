@@ -4,13 +4,13 @@ import java.net.UnknownHostException;
  
 public class LanScanner {
    
-	private static Object[] addresses = new Object[255];
+	private static Object[] addresses = new Object[10];
 
 	
 	public LanScanner(InetAddress ia) {
 	        String[] sAddress = ia.getHostAddress().split("[.]");
 	        String lanAddress = sAddress[0] + "." + sAddress[1] + "." + sAddress[2] + ".";
-	        for (short s = 1; s < 10; s++) {
+	        for (int s = 1; s <= 10; s++) {
 	        	AddressScanner a=  new AddressScanner(lanAddress + s, s);
 
 	        }
@@ -18,11 +18,11 @@ public class LanScanner {
 	
 
 	public static void inserIntoArray(String o, int position){
-		addresses[position]=o;		
+		addresses[position-1]=o;		
 	}
 
 	public void getArrayContent() {
-		for (int i=1; i<10; i++){
+		for (int i=0; i<10; i++){
 			
 			System.out.println("pos: " + i + "\t" + "IP: " + addresses[i]);
 		}
