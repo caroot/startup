@@ -29,7 +29,7 @@ public class LanScanner {
 		
 	}	
 	
-	public Object[] getArray(){
+	public static Object[] getArray(){
 		return addresses;
 	}
 	
