@@ -116,6 +116,15 @@ public class ServerFinder {
 					}
 				} else {
 					System.out.println("Not yet implemented!");
+					String home = System.getProperty("user.home");
+					if (System.getProperty("os.name").contains("Windows")) {
+						System.out.println("Starte Server Windows");
+						cmd = home + "\\jboss-as-7.1.1.Final\\bin\\domain.bat --host-config=host-slave.xml -Djboss.domain.master.address=192.168.16.1 -Djboss.bind.address="+myIP+ " -Djboss.bind.address.management="+myIP;
+					} else {
+						System.out.println("Starte Server Not Windows");
+						cmd = home + "/jboss-as-7.1.1.Final/bin/domain.sh --host-config=host-slave.xml -Djboss.domain.master.address=192.168.16.1 -Djboss.bind.address="+myIP+ " -Djboss.bind.address.management="+myIP;
+			
+					}
 				}
 				
 				try {
