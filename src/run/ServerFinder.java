@@ -27,15 +27,22 @@ public class ServerFinder {
 
 	
 	
-	public void checkIdentity() throws IOException, InterruptedException{
-		InetAddress serverAddr = getServer();
-		if (serverAddr == null) {
+	public void checkIdentity() throws IOException, InterruptedException{	
+		if (myIP.equals("192.168.16.1")) {
 			System.out.println("I am Server!");
-			startDomain("DomainController");			
+			startDomain("DomainController");
 		} else {
 			System.out.println("I am Host!");
 			startDomain("Host");
 		}
+//		InetAddress serverAddr = getServer();
+//		if (serverAddr == null) {
+//			System.out.println("I am Server!");
+//			startDomain("DomainController");			
+//		} else {
+//			System.out.println("I am Host!");
+//			startDomain("Host");
+//		}
 		
 	}
 
@@ -62,15 +69,31 @@ public class ServerFinder {
 			return InetAddress.getLocalHost();
 	}
 	
-	private InetAddress getServer() throws ConnectException, IOError, IOException {
-		String[] tmp = (String[]) LanScanner.getArray();
+	private InetAddress getServer() {
+		String[] tmp = LanScanner.getArray();
 		InetAddress serverAddr = null;
 		boolean serverFound = false;
 		int i = 0;
 		while(!serverFound && i<10) {
-			serverAddr = InetAddress.getByName(tmp[i]);
-			serverFound = ba.isAvailable(serverAddr, JBOSS_PORT, SECURITY_REALM);
-			i++;
+			if (tmp[i] != null) {
+				try {
+					serverAddr = InetAddress.getByName(tmp[i]);
+					serverFound = ba.isAvailable(serverAddr, JBOSS_PORT, SECURITY_REALM);
+				} catch (ConnectException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (UnknownHostException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOError e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				i++;
+			}
 		}
 		return serverAddr;
 		
@@ -84,8 +107,10 @@ public class ServerFinder {
 				if (s.equals("DomainController")) {
 					String home = System.getProperty("user.home");
 					if (System.getProperty("os.name").contains("Windows")) {
+						System.out.println("Starte Server Windows");
 						cmd = home + "\\jboss-as-7.1.1.Final\\bin\\domain.bat --host-config=host-master.xml -Djboss.bind.address.management=192.168.16.1" ;
 					} else {
+						System.out.println("Starte Server Not Windows");
 						cmd = home + "/jboss-as-7.1.1.Final/bin/domain.sh --host-config=host-master.xml -Djboss.bind.address.management=192.168.16.1" ;
 			
 					}
@@ -96,6 +121,7 @@ public class ServerFinder {
 				try {
 					Process myProcess = java.lang.Runtime.getRuntime().exec(cmd);
 					int returnVal = myProcess.waitFor();
+					System.out.println(returnVal);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -113,6 +139,7 @@ public class ServerFinder {
 		    try {
 					ServerFinder sf = new ServerFinder();
 //					ls.getArrayContent();
+					sf.getLocalIP();
 					sf.checkIdentity();
 					
 				System.out.println(	);

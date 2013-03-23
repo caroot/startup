@@ -4,7 +4,7 @@ import java.net.UnknownHostException;
  
 public class LanScanner {
    
-	private static Object[] addresses = new Object[10];
+	private static String[] addresses = new String[10];
 
 	
 	public LanScanner(InetAddress ia) {
@@ -29,7 +29,7 @@ public class LanScanner {
 		
 	}	
 	
-	public static Object[] getArray(){
+	public static String[] getArray(){
 		return addresses;
 	}
 	
