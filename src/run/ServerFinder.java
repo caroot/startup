@@ -19,8 +19,10 @@ public class ServerFinder {
 	private static String myIP = null;
 	private BasicOnlineTest ba;
 	private String cmd = "";
+	private HostCheck hc;
 	
 	public ServerFinder() throws IOException{
+		hc = new HostCheck();
 		LanScanner ls = new LanScanner(getLocalIP());
 		ba = new BasicOnlineTest();
 	}
@@ -29,7 +31,7 @@ public class ServerFinder {
 	
 	public void checkIdentity() throws IOException, InterruptedException{	
 		if (myIP.equals("192.168.16.1")) {
-			System.out.println("I am Server!");
+			System.out.println("I am DomainController!");
 			startDomain("DomainController");
 		} else {
 			System.out.println("I am Host!");
@@ -105,24 +107,33 @@ public class ServerFinder {
 			public void run() {
 				// TODO Auto-generated method stub
 				if (s.equals("DomainController")) {
-					String home = System.getProperty("user.home");
 					if (System.getProperty("os.name").contains("Windows")) {
-						System.out.println("Starte Server Windows");
-						cmd = home + "\\jboss-as-7.1.1.Final\\bin\\domain.bat --host-config=host-master.xml -Djboss.bind.address.management=192.168.16.1" ;
+						System.out.println("Starte DomainController Windows");
+						String workDir = hc.getWorkDir();
+						int index = workDir.lastIndexOf("\\");
+						workDir = workDir.substring(0, index);
+						cmd = workDir + "\\jboss-eap-6.1\\bin\\domain.bat --host-config=host-master.xml -Djboss.bind.address.management=192.168.16.1" ;
 					} else {
-						System.out.println("Starte Server Not Windows");
-						cmd = home + "/jboss-as-7.1.1.Final/bin/domain.sh --host-config=host-master.xml -Djboss.bind.address.management=192.168.16.1" ;
+						System.out.println("Starte DomainController Not Windows");
+						String workDir = hc.getWorkDir();
+						int index = workDir.lastIndexOf("/");
+						workDir = workDir.substring(0, index);
+						cmd = workDir + "/jboss-eap-6.1/bin/domain.sh --host-config=host-master.xml -Djboss.bind.address.management=192.168.16.1" ;
 			
 					}
 				} else {
-					System.out.println("Not yet implemented!");
-					String home = System.getProperty("user.home");
 					if (System.getProperty("os.name").contains("Windows")) {
-						System.out.println("Starte Server Windows");
-						cmd = home + "\\jboss-as-7.1.1.Final\\bin\\domain.bat --host-config=host-slave.xml -Djboss.domain.master.address=192.168.16.1 -Djboss.bind.address="+myIP+ " -Djboss.bind.address.management="+myIP;
+						System.out.println("Starte Host Windows");
+						String workDir = hc.getWorkDir();
+						int index = workDir.lastIndexOf("\\");
+						workDir = workDir.substring(0, index);
+						cmd = workDir + "\\jboss-eap-6.1\\bin\\domain.bat --host-config=host-slave.xml -Djboss.domain.master.address=192.168.16.1 -Djboss.bind.address="+myIP+ " -Djboss.bind.address.management="+myIP;
 					} else {
-						System.out.println("Starte Server Not Windows");
-						cmd = home + "/jboss-as-7.1.1.Final/bin/domain.sh --host-config=host-slave.xml -Djboss.domain.master.address=192.168.16.1 -Djboss.bind.address="+myIP+ " -Djboss.bind.address.management="+myIP;
+						System.out.println("Starte Host Not Windows");
+						String workDir = hc.getWorkDir();
+						int index = workDir.lastIndexOf("/");
+						workDir = workDir.substring(0, index);
+						cmd = workDir + "/jboss-eap-6.1/bin/domain.sh --host-config=host-slave.xml -Djboss.domain.master.address=192.168.16.1 -Djboss.bind.address="+myIP+ " -Djboss.bind.address.management="+myIP;
 			
 					}
 				}
