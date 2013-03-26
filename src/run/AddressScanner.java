@@ -46,7 +46,7 @@ public class AddressScanner implements Runnable {
 				cmd = "ping -w 200 -n 2 " + host;
 			} else {
 				// For Linux and OSX
-				cmd = "ping -w 200 -c 2 " + host;
+				cmd = "ping -W200 -c 2 " + host;
 			}
 
 			Process myProcess = java.lang.Runtime.getRuntime().exec(cmd);
